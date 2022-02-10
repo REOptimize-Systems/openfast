@@ -52,6 +52,7 @@ add_library(ifwlib ${IFW_SOURCES})
 target_link_libraries(ifwlib nwtclibs)
 
 add_library(ifwlib_obj OBJECT ${IFW_SOURCES})
+target_link_libraries(ifwlib_obj nwtclibs_obj)
 
 set(IFW_DRIVER_SOURCES
   src/InflowWind_Driver_Types.f90
