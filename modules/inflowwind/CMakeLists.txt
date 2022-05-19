@@ -48,11 +48,11 @@ set(IFW_SOURCES
   src/Lidar_Types.f90
 )
 
-add_library(ifwlib ${IFW_SOURCES})
-target_link_libraries(ifwlib nwtclibs)
-
 add_library(ifwlib_obj OBJECT ${IFW_SOURCES})
 target_link_libraries(ifwlib_obj nwtclibs_obj)
+
+add_library(ifwlib $<TARGET_OBJECTS:ifwlib_obj>)
+target_link_libraries(ifwlib nwtclibs)
 
 set(IFW_DRIVER_SOURCES
   src/InflowWind_Driver_Types.f90

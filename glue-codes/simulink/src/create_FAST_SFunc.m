@@ -50,7 +50,7 @@ else
 
     libDir = fullfile(installDir, 'lib');
     includeDir = fullfile(installDir, 'include');
-    libName = 'openfastlib';
+    libName = 'openfastlib_mex';
 end
 
 %% BUILD COMMAND
