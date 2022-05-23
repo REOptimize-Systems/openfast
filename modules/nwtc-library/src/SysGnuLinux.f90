@@ -1,6 +1,6 @@
 !**********************************************************************************************************************************
 ! LICENSING
-! Copyright (C) 2013  National Renewable Energy Laboratory
+! Copyright (C) 2013-2015  National Renewable Energy Laboratory
 !
 !    This file is part of the NWTC Subroutine Library.
 !
@@ -299,38 +299,39 @@ SUBROUTINE Set_IEEE_Constants( NaN_D, Inf_D, NaN, Inf, NaN_S, Inf_S )
 
    REAL(DbKi), INTENT(inout)           :: Inf_D          ! IEEE value for NaN (not-a-number) in double precision
    REAL(DbKi), INTENT(inout)           :: NaN_D          ! IEEE value for Inf (infinity) in double precision
+
    REAL(ReKi), INTENT(inout)           :: Inf            ! IEEE value for NaN (not-a-number)
    REAL(ReKi), INTENT(inout)           :: NaN            ! IEEE value for Inf (infinity)
+
    REAL(SiKi), INTENT(inout)           :: Inf_S          ! IEEE value for NaN (not-a-number) in single precision
    REAL(SiKi), INTENT(inout)           :: NaN_S          ! IEEE value for Inf (infinity) in single precision
 
-      ! local variables for getting values of NaN and Inf (not necessary when using ieee_arithmetic)
-   REAL(DbKi)                          :: Neg_D          ! a negative real(DbKi) number
-   REAL(ReKi)                          :: Neg            ! a negative real(ReKi) number
-   REAL(SiKi)                          :: Neg_S          ! a negative real(SiKi) number
+   ! local variables for getting values of NaN and Inf (not necessary when using ieee_arithmetic)
+   REAL(DbKi)     :: Neg_D          ! a negative real(DbKi) number
+   REAL(SiKi)     :: Neg_S          ! a negative real(SiKi) number
+   REAL(ReKi)     :: Neg            ! a negative real(ReKi) number
 
-   
       ! if compiling with floating-point-exception traps, this will not work, so we've added a compiler directive.
       !  note that anything that refers to NaN or Inf will be incorrect in that case.
       
 #ifndef FPE_TRAP_ENABLED      
       ! set variables to negative numbers to calculate NaNs (compilers may complain when taking sqrt of negative constants)
    Neg_D = -1.0_DbKi
-   Neg   = -1.0_ReKi
    Neg_S = -1.0_SiKi
+   Neg   = -1.0_ReKi
 
    NaN_D = SQRT ( Neg_D )
-   NaN   = SQRT ( Neg )
    NaN_S = SQRT ( Neg_S )
+   NaN   = SQRT ( Neg )
 
       ! set variables to zero to calculate Infs (using division by zero)
    Neg_D = 0.0_DbKi
-   Neg   = 0.0_ReKi
    Neg_S = 0.0_SiKi
+   Neg   = 0.0_ReKi
    
    Inf_D = 1.0_DbKi / Neg_D
-   Inf   = 1.0_ReKi / Neg
    Inf_S = 1.0_SiKi / Neg_S
+   Inf   = 1.0_ReKi / Neg
 #endif 
 
 END SUBROUTINE Set_IEEE_Constants

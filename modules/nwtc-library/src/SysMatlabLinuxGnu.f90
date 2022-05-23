@@ -15,7 +15,6 @@
 ! WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ! See the License for the specific language governing permissions and
 ! limitations under the License.
-!
 !**********************************************************************************************************************************
 MODULE SysSubs
 
@@ -309,9 +308,10 @@ SUBROUTINE Set_IEEE_Constants( NaN_D, Inf_D, NaN, Inf, NaN_S, Inf_S )
    REAL(SiKi), INTENT(inout)           :: Inf_S          ! IEEE value for NaN (not-a-number) in single precision
    REAL(SiKi), INTENT(inout)           :: NaN_S          ! IEEE value for Inf (infinity) in single precision
 
-   real(DbKi)     :: Neg_D
-   real(SiKi)     :: Neg_S
-   real(ReKi)     :: Neg
+   ! local variables for getting values of NaN and Inf (not necessary when using ieee_arithmetic)
+   REAL(DbKi)     :: Neg_D          ! a negative real(DbKi) number
+   REAL(SiKi)     :: Neg_S          ! a negative real(SiKi) number
+   REAL(ReKi)     :: Neg            ! a negative real(ReKi) number
 
       ! if compiling with floating-point-exception traps, this will not work, so we've added a compiler directive.
       !  note that anything that refers to NaN or Inf will be incorrect in that case.
@@ -349,7 +349,7 @@ END SUBROUTINE UsrAlarm
 !=======================================================================
 SUBROUTINE WrNR ( Str )
 
-      ! This routine writes out a string to the screen without following it with a new line.
+   ! This routine writes out a string to the screen without following it with a new line.
 
    CHARACTER(*), INTENT(IN)     :: Str       ! The string to write to the screen.
    INTEGER                      :: Stat      ! Number of characters printed
